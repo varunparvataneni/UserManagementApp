@@ -1,0 +1,73 @@
+﻿@model UserManagementApp.Models.GroupModel
+
+@{
+    ViewBag.Title = "Group";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<h2 class="form-signin-heading">Edit-Group</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.GroupID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GroupDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GroupDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupActive, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.GroupActive)
+                @Html.ValidationMessageFor(model => model.GroupActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <label class="control-label">Menu-Options:</label>
+    @for (var i = 0; i < Model.MenuList.Count(); i++)
+    {
+        <div class="form-group">
+            <div class="col-md-2">
+                @Html.HiddenFor(m => m.MenuList[i].MenuID)
+                @Html.DisplayFor(m => m.MenuList[i].MenuName)
+
+                @Html.EditorFor(m => m.MenuList[i].IsSelected, new { @class = "checkbox" })
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

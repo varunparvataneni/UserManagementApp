@@ -1,0 +1,59 @@
+﻿@model IEnumerable<UserManagementApp.Models.UserModel>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<h2 class="form-signin-heading">Link User</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoginName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            <label class="control-label">GroupID</label>
+        </th>
+        <th>
+            <label class="control-label">Actions</label>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoginName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group_ID)
+            </td>
+            <td>
+                @if (HttpContext.Current.Session["Link User"].ToString() == "True")
+                {
+                    @Html.ActionLink("LinkUser", "LinkUserGroup", new { id = item.UserID })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
